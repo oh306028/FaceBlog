@@ -24,14 +24,12 @@ namespace App.ViewModels
 
         [Required]
         [Compare("Password", ErrorMessage = "Passwords have to be equal")]
+        [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
 
         [Required]
         public DateTime DateOfbirth { get; set; }
-
-        [Required]
-        public string PhoneNumber { get; set; }
 
         [Required]
         public string Country { get; set; }
