@@ -8,15 +8,44 @@ namespace App.Controllers
     public class AccountController : Controller
     {
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
 
-        public AccountController(SignInManager<AppUser> signInManager)
+        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
         {
-            _signInManager = signInManager; 
-
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
-        public IActionResult Register(RegisterViewModel model)
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            if (ModelState.IsValid) 
+            {
+                var address = new Address()
+                {
+                    Country = model.Country,
+                    City = model.City,
+                    Street = model.Street
+                };
+
+                var newUser = new AppUser()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    UserName = model.UserName,
+                    Address = address
+                };
+
+                var result = await _userManager.CreateAsync(newUser, model.Password);
+
+                if (result.Succeeded)
+                {
+                    await _signInManager.SignInAsync(newUser, false);
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
             return View(model);
         }
 
@@ -28,6 +57,11 @@ namespace App.Controllers
             return View();
         }
 
+
+        public IActionResult Login()
+        {
+            return View();
+        }
 
 
 
@@ -52,11 +86,6 @@ namespace App.Controllers
 
 
      
-        public IActionResult Login()
-        {
-            return View();
-        }
-
 
 
     }
