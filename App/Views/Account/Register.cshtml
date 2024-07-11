@@ -10,6 +10,7 @@
 
     <div class="col-lg-4 card mb-3">
         <h2 class="text-center">Register</h2>
+        <hr />
 
         <form asp-action="Login" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -89,18 +90,14 @@
             </div>
 
 
-         
-
-            <div class="mb-1 form-check">
-              
-            </div>
-
             <div class="row">
-                <div class="col-8">
-                    <a asp-action="Login" class="text-decoration-none float-start mt-2">Have account?</a>
+                <div class="col mt-2">
+                    <a asp-action="Login" class="text-decoration-none float-start mb-1 ">Have account?</a>
                 </div>
-                <div class="col-4 pb-2">
-                    <input asp-action="Register" type="submit" value="Register" class="btn btn-primary btn-md float-end" />
+                <div class="row mx-auto">
+                <div class="col pb-2">
+                    <input asp-action="Register" type="submit" value="Register" class="btn btn-primary btn-lg w-100" />
+                </div>
                 </div>
             </div>
 
