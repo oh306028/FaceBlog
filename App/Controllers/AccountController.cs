@@ -2,6 +2,7 @@
 using App.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace App.Controllers
 {
@@ -9,11 +10,13 @@ namespace App.Controllers
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
+        private readonly BlogDbContext _context;
 
-        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager)
+        public AccountController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, BlogDbContext context)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+           _context = context;
         }
 
         [HttpPost]
@@ -21,30 +24,48 @@ namespace App.Controllers
         {
             if (ModelState.IsValid) 
             {
-                var address = new Address()
-                {
-                    Country = model.Country,
-                    City = model.City,
-                    Street = model.Street
-                };
-
-                var newUser = new AppUser()
+                var newUser = new AppUser
                 {
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
                     UserName = model.UserName,
-                    Address = address
                 };
+
+               
 
                 var result = await _userManager.CreateAsync(newUser, model.Password);
 
                 if (result.Succeeded)
-                {
-                    await _signInManager.SignInAsync(newUser, false);
+                {                 
+                   
+
+                    var address = new Address
+                    {
+                        Country = model.Country,
+                        City = model.City,
+                        Street = model.Street,
+                        UserId = newUser.Id
+                    };
+
+                    _context.Add(address);
+                    await _context.SaveChangesAsync();
+
                     return RedirectToAction("Index", "Home");
+
                 }
+
+                ModelState.AddModelError("", "Register attempt went wrong");
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+                return View(model);
+                
             }
+            ModelState.AddModelError("", "Register attempt went wrong");
 
             return View(model);
         }
@@ -78,6 +99,7 @@ namespace App.Controllers
                 }
 
             }
+            ModelState.AddModelError("", "Login attempt went wrong");
 
 
             return View(model);
