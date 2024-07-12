@@ -2,7 +2,7 @@
 using App.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace App.Controllers
 {
@@ -18,6 +18,7 @@ namespace App.Controllers
             _userManager = userManager;
            _context = context;
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
@@ -84,6 +85,65 @@ namespace App.Controllers
         }
 
 
+        public IActionResult Update()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Update(UpdateViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                var userName = User.Identity.Name;
+                var currentUser = await _userManager.FindByNameAsync(userName);
+
+               
+                if (!string.IsNullOrEmpty(model.Password))
+                {
+                    var updatedPassword = _userManager.PasswordHasher.HashPassword(currentUser, model.Password);
+                    currentUser.PasswordHash = updatedPassword;
+                }
+
+                currentUser.UserName = model.UserName ?? currentUser.UserName;
+                currentUser.FirstName = model.FirstName ?? currentUser.FirstName;
+                currentUser.LastName = model.LastName ?? currentUser.LastName;
+                currentUser.Email = model.Email ?? currentUser.Email;
+                currentUser.Address.Country = model.Country ?? currentUser.Address.Country;
+                currentUser.Address.City = model.City ?? currentUser.Address.City;
+                currentUser.Address.Street = model.Street ?? currentUser.Address.Street;
+
+
+
+                var result = await _userManager.UpdateAsync(currentUser);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Update", "Account");
+                }
+
+                ModelState.AddModelError("", "Update attempt went wrong");
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+
+
+                return View(model);
+
+            }
+
+          
+            ModelState.AddModelError("", "Update attempt went wrong");
+            return View(model);
+
+        }
+
+
+
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -108,12 +168,13 @@ namespace App.Controllers
         }
 
 
+
+
         public async Task<IActionResult> LogOut()
         {
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
             
-
         }
 
 
