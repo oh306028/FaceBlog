@@ -71,7 +71,6 @@ namespace App.Controllers
         }
 
 
-
   
         public IActionResult Register()
         {
@@ -91,7 +90,10 @@ namespace App.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
 
                 if (result.Succeeded)
                 {
@@ -105,6 +107,14 @@ namespace App.Controllers
             return View(model);
         }
 
+
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+            
+
+        }
 
 
      
