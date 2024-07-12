@@ -3,12 +3,29 @@
 
 @{
     ViewData["Title"] = "Register";
+    Layout = null;
+}
 
-    }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body class="loginBody">
+
+    <div class="container">
 
 <div class="row d-flex align-items-center justify-content-center">
 
-    <div class="col-lg-4 card mb-3">
+            <div class="col-lg-4 card mb-3 shadow p-3 mb-5 rounded">
         <h2 class="text-center">Register</h2>
         <hr />
 
@@ -90,25 +107,36 @@
             </div>
 
 
-            <div class="row">
+            <div class=row>
                 <div class="col mt-2">
                     <a asp-action="Login" class="text-decoration-none float-start mb-1 ">Have account?</a>
                 </div>
-                <div class="row mx-auto">
-                <div class="col pb-2">
-                    <input asp-action="Register" type="submit" value="Register" class="btn btn-primary btn-lg w-100" />
+                
+                <div class="col pb-2 mt-2">
+                                <input asp-action="Register" type="submit" value="Register" class="btn btn-primary btn-lg w-100 float-end" />
                 </div>
-                </div>
-            </div>
+                    </div>
+           
 
 
         </form>
 
     </div>
 
-
+        </div>
 
 </div>
+
+    <footer class="RegisterFooter">
+        <b>FaceBlog </b>
+        <br />
+        Connect, share, and stay updated with friends and family.
+        Experience seamless social networking with features you love,
+        reimagined for a more personal touch. Join FaceBlog today!
+    </footer>
+
+</body>
+</html>
 
 
 @section scripts {
