@@ -114,7 +114,7 @@ namespace App.Controllers
                 currentUser.Address.Country = model.Country ?? currentUser.Address.Country;
                 currentUser.Address.City = model.City ?? currentUser.Address.City;
                 currentUser.Address.Street = model.Street ?? currentUser.Address.Street;
-
+                currentUser.PhoneNumber = model.PhoneNumber ?? currentUser.PhoneNumber;
 
 
                 var result = await _userManager.UpdateAsync(currentUser);
