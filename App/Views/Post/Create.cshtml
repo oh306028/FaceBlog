@@ -1,7 +1,42 @@
-﻿
+﻿@model PostViewModel
+
+
+
 @{
+
+    ViewData["Title"] = "Create";
+
 
 
 }
+
+
+<div class="row">
+    <div class="col-4">
+
+    </div>
+
+    <div class="4">
+        <form asp-action="Create" method="post">
+
+          <textarea asp-for="Content" style="width: 500px; height: 400px;">
+
+
+
+
+
+        </textarea>
+
+
+            <div class="col">
+                <input asp-action="Create" class="btn btn-primary btn-lg float-start" type="submit" value="Post" />
+            </div>
+        </form>
+
+    
+
+    </div>
+</div>
+
 
 
