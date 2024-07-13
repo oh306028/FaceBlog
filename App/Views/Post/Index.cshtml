@@ -8,12 +8,20 @@
 
 <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
+<div class="row text-center">
+    <div class="col-4"></div>
+    <div class="col-4 rounded border mb-3">
+        <a asp-action="Create">Post something</a>
+    </div>
+</div>
+
+<h2 class="text-center">Posts</h2>
+<hr />
+
 
 <div class="containerPost">
 
-    <h2 class="text-center">Posts</h2>
-    <hr />
-       
+  
    
             @foreach(var post in @Model)
             {
@@ -30,13 +38,10 @@
             <p>
                 Likes: @post.Likes
             </p>
-                
-
-               
+                      
 
             }
   
-
 
 </div>
     
