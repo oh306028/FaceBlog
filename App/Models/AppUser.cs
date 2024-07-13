@@ -18,6 +18,10 @@ namespace App.Models
 
 
 
-        virtual public Address Address { get; set; }        
+        public virtual Address Address { get; set; }
+        public virtual List<Post> Posts { get; set; } = new List<Post>();
+        public virtual List<Comment> Comments { get; set; } = new List<Comment>();  
+            
+
     }
 }
