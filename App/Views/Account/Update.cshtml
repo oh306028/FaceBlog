@@ -1,0 +1,92 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model UpdateViewModel
+@inject UserManager<AppUser> userManager
+
+
+
+@{
+    ViewData["Title"] = "Profile";
+
+    var userName = User.Identity.Name;
+    var currentUser = await userManager.FindByNameAsync(userName);
+
+}
+
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-4 text-center">
+            User 
+        </div>
+
+        <div class="col-4 text-center">
+            Address
+        </div>
+
+        <div class="col-4 text-center">
+            Profile
+        </div>
+
+        <div class="row mt-4">
+        <div class="col-4">
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" class="form-control" placeholder="@currentUser.Email"/>
+        </div>
+            <div class="col-4">
+                <label asp-for="Country">Country</label>
+                <input asp-for="Country" class="form-control" placeholder="Country" />
+            </div>
+            <div class="col-4">
+                <label asp-for="FirstName">FirstName</label>
+                <input asp-for="FirstName" class="form-control" placeholder="@currentUser.FirstName" />
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <label asp-for="UserName">UserName</label>
+                <input asp-for="UserName" class="form-control" placeholder="@currentUser.UserName" />
+            </div>
+            <div class="col-4">
+                <label asp-for="City">City</label>
+                <input asp-for="City" class="form-control" placeholder="City" />
+            </div>
+            <div class="col-4">
+                <label asp-for="LastName">LastName</label>
+                <input asp-for="LastName" class="form-control" placeholder="@currentUser.LastName" />
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-4">
+                <label asp-for="DateOfbirth">DateOfBirth</label>
+                <input asp-for="DateOfbirth" class="form-control" placeholder="@currentUser.DateOfBirth" />
+            </div>
+            <div class="col-4">
+                <label asp-for="Street">City</label>
+                <input asp-for="Street" class="form-control" placeholder="Street" />
+            </div>
+            <div class="col-4">
+                <label asp-for="PhoneNumber">PhoneNumber</label>
+                <input asp-for="PhoneNumber" class="form-control" placeholder="@currentUser.PhoneNumber" />
+            </div>
+            </div>
+
+        <div class="col pb-2 mt-2">
+            <a asp-action="Reset" asp-controller="Account" class="text-decoration-none mb-1">Reset password</a>
+        </div>
+
+        <div class="col pb-2 mt-2">
+            <input asp-action="Update" type="submit" value="Update" class="btn btn-primary btn-lg float-end" />
+        </div>
+
+       
+
+
+
+    </div>
+</div>
