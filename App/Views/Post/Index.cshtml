@@ -1,0 +1,43 @@
+﻿@model List<Post>
+
+@{
+    ViewData["Title"] = "Posts";
+    ViewData["HideFooter"] = true;
+    
+}
+
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+
+<div class="containerPost">
+
+    <h2 class="text-center">Posts</h2>
+    <hr />
+       
+   
+            @foreach(var post in @Model)
+            {
+            <div class="postTable">
+                <h5>@post.Createdby</h5>
+                <h5>@post.CreatedDate.ToShortDateString()</h5>
+                <hr />
+           
+                        <div class="post">
+                        @post.Content
+                         </div>
+
+                         </div>
+            <p>
+                Likes: @post.Likes
+            </p>
+                
+
+               
+
+            }
+  
+
+
+</div>
+    
+
